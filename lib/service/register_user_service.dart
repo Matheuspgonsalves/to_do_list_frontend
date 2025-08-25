@@ -1,22 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-Future<void> registerUser(String name, String email, String password) async {
-  final url = Uri.parse("http://192.168.18.240:5001/auth/register");
+Future<bool> registerUser(
+  String name,
+  String email,
+  String password,
+) async {
+  final url = Uri.parse("${dotenv.env['API_URL']}/auth/register");
 
   final response = await http.post(
     url,
     headers: {"Content-Type": "application/json"},
-    body: jsonEncode({
-      "name": name,
-      "email": email,
-      "password": password,
-    }),
+    body: jsonEncode({"name": name, "email": email, "password": password}),
   );
 
-  if (response.statusCode == 201) {
-    print("Usuário criado com sucesso");
-  } else {
-    print("Erro ao cadastrar usuário");
-  }
+  return response.statusCode == 201;
 }
