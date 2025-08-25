@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do_list_frontend/presentation/pages/login_page.dart';
-import 'package:to_do_list_frontend/service/register_user_service.dart';
+import 'package:to_do_list_frontend/presentation/pages/register_page.dart';
+import 'package:to_do_list_frontend/service/login_user_service.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  final nameController = TextEditingController();
+class _LoginPageState extends State<LoginPage>{
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -39,7 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               SizedBox(height: 30),
               Text(
-                "Cadastre-se abaixo para começar a usar o app.",
+                "Faça login abaixo para usar o app",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
@@ -48,28 +47,10 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               SizedBox(height: 30),
               CupertinoTextField(
-                controller: nameController,
-                padding: EdgeInsets.all(15),
-                placeholder: "Digite seu nome",
-                placeholderStyle: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 14,
-                ),
-                style: TextStyle(color: Colors.white, fontSize: 14),
-                decoration: BoxDecoration(
-                  color: Colors.black12,
-                  borderRadius: BorderRadius.all(Radius.circular(7)),
-                ),
-              ),
-              SizedBox(height: 5),
-              CupertinoTextField(
                 controller: emailController,
                 padding: EdgeInsets.all(15),
                 placeholder: "Digite seu email",
-                placeholderStyle: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 14,
-                ),
+                placeholderStyle: TextStyle(color: Colors.white, fontSize: 14),
                 style: TextStyle(color: Colors.white, fontSize: 14),
                 decoration: BoxDecoration(
                   color: Colors.black12,
@@ -80,12 +61,9 @@ class _RegisterPageState extends State<RegisterPage> {
               CupertinoTextField(
                 controller: passwordController,
                 padding: EdgeInsets.all(15),
-                placeholder: "Digite sua nova senha",
+                placeholder: "Digite sua senha",
                 obscureText: true,
-                placeholderStyle: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 14,
-                ),
+                placeholderStyle: TextStyle(color: Colors.white, fontSize: 14),
                 style: TextStyle(color: Colors.white, fontSize: 14),
                 decoration: BoxDecoration(
                   color: Colors.black12,
@@ -98,8 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: CupertinoButton(
                   color: Colors.greenAccent,
                   onPressed: () async {
-                    final success = await registerUser(
-                      nameController.text,
+                    final success = await loginUser(
                       emailController.text,
                       passwordController.text,
                     );
@@ -109,19 +86,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     if (success) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text("Usuário criado com sucesso."),
+                          content: Text("Login bem sucedido, rediecionando..."),
                         ),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Erro ao cadastrar usuário."),
-                        ),
+                        const SnackBar(content: Text("Erro ao fazer login")),
                       );
                     }
                   },
                   child: Text(
-                    "Cadastrar",
+                    "Fazer Login",
                     style: TextStyle(
                       color: Colors.black45,
                       fontSize: 16,
@@ -141,11 +116,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const LoginPage())
+                      MaterialPageRoute(
+                        builder: (context) => const RegisterPage(),
+                      ),
                     );
                   },
                   child: Text(
-                    "Fazer Login",
+                    "Cadastre-se",
                     style: TextStyle(
                       color: Colors.black45,
                       fontSize: 16,
