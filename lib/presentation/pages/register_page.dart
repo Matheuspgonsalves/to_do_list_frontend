@@ -19,10 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Image.asset(
-          "lib/assets/images/logo.png",
-          height: 50,
-        ),
+        title: Image.asset("lib/assets/images/logo.png", height: 50),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -32,10 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
         padding: const EdgeInsets.all(27),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Colors.blue,
-              Colors.lightBlueAccent,
-            ],
+            colors: [Colors.blue, Colors.lightBlueAccent],
           ),
         ),
         child: SafeArea(
@@ -46,9 +40,9 @@ class _RegisterPageState extends State<RegisterPage> {
               Text(
                 "Cadastre-se abaixo para começar a usar o app.",
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               SizedBox(height: 30),
@@ -56,10 +50,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: nameController,
                 padding: EdgeInsets.all(15),
                 placeholder: "Digite seu nome",
-                placeholderStyle: TextStyle(color: Colors.white70, fontSize: 14),
+                placeholderStyle: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
+                ),
                 style: TextStyle(color: Colors.white, fontSize: 14),
                 decoration: BoxDecoration(
-                  color: Colors.black12, borderRadius: BorderRadius.all(Radius.circular(7)),
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.all(Radius.circular(7)),
                 ),
               ),
               SizedBox(height: 5),
@@ -67,10 +65,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: emailController,
                 padding: EdgeInsets.all(15),
                 placeholder: "Digite seu email",
-                placeholderStyle: TextStyle(color: Colors.white70, fontSize: 14),
+                placeholderStyle: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
+                ),
                 style: TextStyle(color: Colors.white, fontSize: 14),
                 decoration: BoxDecoration(
-                  color: Colors.black12, borderRadius: BorderRadius.all(Radius.circular(7)),
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.all(Radius.circular(7)),
                 ),
               ),
               SizedBox(height: 5),
@@ -79,10 +81,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: EdgeInsets.all(15),
                 placeholder: "Digite sua nova senha",
                 obscureText: true,
-                placeholderStyle: TextStyle(color: Colors.white70, fontSize: 14),
+                placeholderStyle: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
+                ),
                 style: TextStyle(color: Colors.white, fontSize: 14),
                 decoration: BoxDecoration(
-                  color: Colors.black12, borderRadius: BorderRadius.all(Radius.circular(7)),
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.all(Radius.circular(7)),
                 ),
               ),
               const SizedBox(height: 15),
@@ -90,19 +96,35 @@ class _RegisterPageState extends State<RegisterPage> {
                 width: double.infinity,
                 child: CupertinoButton(
                   color: Colors.greenAccent,
-                  onPressed: () {
-                    registerUser(
-                        nameController.text,
-                        emailController.text,
-                        passwordController.text,
+                  onPressed: () async {
+                    final success = await registerUser(
+                      nameController.text,
+                      emailController.text,
+                      passwordController.text,
                     );
+
+                    if (!mounted) return;
+
+                    if (success) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Usuário criado com sucesso."),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Erro ao cadastrar usuário."),
+                        ),
+                      );
+                    }
                   },
                   child: Text(
                     "Cadastrar",
                     style: TextStyle(
-                        color: Colors.black45,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800
+                      color: Colors.black45,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                 ),
@@ -110,11 +132,8 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 5),
               Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.white70,
-                      width: 1.5,
-                    )
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.white70, width: 1.5),
                 ),
                 width: double.infinity,
                 child: CupertinoButton(
@@ -122,13 +141,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Text(
                     "Fazer Login",
                     style: TextStyle(
-                        color: Colors.black45,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800
+                      color: Colors.black45,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
